@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var utils = require('../common/utils'); 
+var utils = require('../common/utils');
 var config = require('../common/config');
 var wechatApi = require('../common/wechat_api');
 var menu = require('../common/menu');
 
 //获取,验证access_token,存入redis中
 router.use(function(req, res, next) {
-
     //根据token从redis中获取access_token
     utils.get(config.weixin.token).then(function(data){
         //获取到值--往下传递
@@ -50,5 +49,10 @@ router.get('/', utils.sign(config), function(req, res, next) {
         res.status(200).send(result);
     })
 });
+
+router.post('/', function(req, res, next) {
+    console.log('post body:', req.body);
+    res.send('end');
+})
 
 module.exports = router;
